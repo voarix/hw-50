@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+<div id="app"></div>
+
+<script type="text/babel">
+    const Film = ({name, year, img}) => {
+        return (
+            <div className="film">
+                <div className="film__img-block">
+                    <img src={img} alt={'Photo of ' + name}/>
+                </div>
+                <div className="film__text-block">
+                    <h3 className="film__title">{name}</h3>
+                    <p className="film__year">{year}</p>
+                </div>
+            </div>
+        );
+    };
+
+    const content = (
+        <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
+            <Film name="The Matrix" year={1999} img="https://static.hdrezka.ac/i/2014/1/22/b4442e483f19aqx35e41i.jpg"/>
+            <Film name="Inception" year={2010} img="https://static.hdrezka.ac/i/2021/11/2/kcad758381af1ow79z45o.jpeg"/>
+            <Film name="The Dark Knight" year={2008} img="https://static.hdrezka.ac/i/2013/11/7/pbcd3c26d5b8ehw12h24m.jpg"/>
+        </div>
+    );
+
+    ReactDOM.render(content, document.getElementById('app'));
+</script>
+</body>
+</html>
