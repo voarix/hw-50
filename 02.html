@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Layout</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            display: grid;
+            grid-template-areas:
+                "header header"
+                "sidebar content"
+                "footer footer";
+            grid-template-columns: 250px 1fr;
+            grid-template-rows: 60px 1fr 50px;
+            height: 100vh;
+        }
+
+        header, footer, aside, main {
+            padding: 20px;
+            background-color: white;
+            border: 1px solid #ddd;
+        }
+
+        header {
+            grid-area: header;
+            background-color: #333;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        aside {
+            grid-area: sidebar;
+            background-color: #444;
+            color: white;
+        }
+
+        aside ul {
+            list-style: none;
+        }
+
+        aside ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px 0;
+        }
+
+        main {
+            grid-area: content;
+            overflow-y: auto;
+        }
+
+        footer {
+            grid-area: footer;
+            background-color: #333;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .film {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            margin: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .film:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .film__img-block {
+            width: 100%;
+            height: 450px;
+            overflow: hidden;
+        }
+
+        .film__img-block img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .film__text-block {
+            padding: 15px;
+        }
+
+        .film__title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .film__year {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .film-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+    const Header = () => (
+        <header>
+            <h1>КиноПоиск</h1>
+        </header>
+    );
+
+    const Sidebar = () => (
+        <aside>
+            <nav>
+                <ul>
+                    <li><a href="#">Главная</a></li>
+                    <li><a href="#">Фильмы</a></li>
+                    <li><a href="#">О нас</a></li>
+                    <li><a href="#">Контакты</a></li>
+                </ul>
+            </nav>
+        </aside>
+    );
+
+    const Footer = () => (
+        <footer>
+            <p>&copy; 2024 Кинопоиск. Все права защищены.</p>
+        </footer>
+    );
+
+    const Film = ({name, year, img}) => (
+        <div className="film">
+            <div className="film__img-block">
+                <img src={img} alt={'Photo of ' + name}/>
+            </div>
+            <div className="film__text-block">
+                <h3 className="film__title">{name}</h3>
+                <p className="film__year">{year}</p>
+            </div>
+        </div>
+    );
+
+    const Content = () => (
+        <main>
+            <h2>Онлайн кинотеатр</h2>
+            <p>
+                Здесь вы можете найти информацию о популярных фильмах, ознакомиться с описаниями и выбрать интересующий
+                вас контент.
+            </p>
+            <div className="film-list">
+                <Film name="The Matrix" year={1999} img="https://static.hdrezka.ac/i/2014/1/22/b4442e483f19aqx35e41i.jpg"/>
+                <Film name="Inception" year={2010} img="https://static.hdrezka.ac/i/2021/11/2/kcad758381af1ow79z45o.jpeg"/>
+                <Film name="The Dark Knight" year={2008} img="https://static.hdrezka.ac/i/2013/11/7/pbcd3c26d5b8ehw12h24m.jpg"/>
+            </div>
+        </main>
+    );
+
+    const App = () => (
+        <div className="container">
+            <Header/>
+            <Sidebar/>
+            <Content/>
+            <Footer/>
+        </div>
+    );
+
+    ReactDOM.render(<App/>, document.getElementById('root'));
+</script>
+</body>
+</html>
