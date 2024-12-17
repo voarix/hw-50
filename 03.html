@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Layout(короче фильмы)</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            display: grid;
+            grid-template-areas:
+                "header header"
+                "sidebar content"
+                "footer footer";
+            grid-template-columns: 250px 1fr;
+            grid-template-rows: 80px 1fr 60px;
+            height: 100vh;
+        }
+
+        header, footer, aside, main {
+            padding: 20px;
+            border-radius: 8px;
+            margin: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            grid-area: header;
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+            color: white;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        aside {
+            grid-area: sidebar;
+            background-color: #333;
+            color: white;
+            border-right: 4px solid #6a11cb;
+        }
+
+        aside ul {
+            list-style: none;
+        }
+
+        aside ul li a {
+            display: block;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        aside ul li a:hover {
+            background-color: #6a11cb;
+            color: #fff;
+        }
+
+        main {
+            grid-area: content;
+            background-color: #fff;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+        }
+
+        footer {
+            grid-area: footer;
+            background: linear-gradient(90deg, #2575fc, #6a11cb);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .film-list {
+            margin-top: 70px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+        }
+
+        .film {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            margin: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .film:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .film__img-block {
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+        }
+
+        .film__img-block img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .film__text-block {
+            padding: 30px 20px;
+        }
+
+        .film__title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .film__year {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .film__text-block p {
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+    class Header extends React.Component {
+        render() {
+            return (
+                <header>
+                    <h1>КиноПоиск</h1>
+                </header>
+            );
+        }
+    }
+
+    class Sidebar extends React.Component {
+        render() {
+            return (
+                <aside>
+                    <nav>
+                        <ul>
+                            <li><a href="#">Главная</a></li>
+                            <li><a href="#">Фильмы</a></li>
+                            <li><a href="#">О нас</a></li>
+                            <li><a href="#">Контакты</a></li>
+                        </ul>
+                    </nav>
+                </aside>
+            );
+        }
+    }
+
+    class Footer extends React.Component {
+        render() {
+            return (
+                <footer>
+                    <p>&copy; 2024 Кинопоиск. Все права защищены.</p>
+                </footer>
+            );
+        }
+    }
+
+    class Film extends React.Component {
+        render() {
+            return (
+                <div className="film">
+                    <div className="film__img-block">
+                        <img src={this.props.img} alt={'Photo of ' + this.props.name}/>
+                    </div>
+                    <div className="film__text-block">
+                        <h3 className="film__title">{this.props.name}</h3>
+                        <p className="film__year">{this.props.year}</p>
+                    </div>
+                </div>
+            );
+        }
+    }
+
+    class Content extends React.Component {
+        render() {
+            return (
+                <main>
+                    <h2>Онлайн кинотеатр</h2>
+                    <p>
+                        Здесь вы можете найти информацию о популярных фильмах, ознакомиться с описаниями и выбрать
+                        интересующий
+                        вас контент.
+                    </p>
+                    <div className="film-list">
+                        <Film name="The Matrix" year={1999}
+                              img="https://static.hdrezka.ac/i/2014/1/22/b4442e483f19aqx35e41i.jpg"/>
+                        <Film name="Inception" year={2010}
+                              img="https://static.hdrezka.ac/i/2021/11/2/kcad758381af1ow79z45o.jpeg"/>
+                        <Film name="The Dark Knight" year={2008}
+                              img="https://static.hdrezka.ac/i/2013/11/7/pbcd3c26d5b8ehw12h24m.jpg"/>
+                        <Film name=" The Hateful Eight" year={2015}
+                              img="https://static.hdrezka.ac/i/2021/1/20/oec7f426bbfe9sd70x37n.jpeg"/>
+                    </div>
+                </main>
+            );
+        }
+    }
+
+    class App extends React.Component {
+        render() {
+            return (
+                <div className="container">
+                    <Header/>
+                    <Sidebar/>
+                    <Content/>
+                    <Footer/>
+                </div>
+            );
+        }
+    }
+
+    ReactDOM.render(<App/>, document.getElementById('root'));
+</script>
+</body>
+</html>
